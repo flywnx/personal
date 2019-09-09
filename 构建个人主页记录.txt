@@ -1,0 +1,22 @@
+vue-cli 创建 ts 项目时需要 手动选择 typescript选项
+
+加入sass配置：
+npm install node-sass --save-dev 
+npm install sass-loader --save-dev
+
+安装插件：easy sass
+
+安装配置：使sass 全局变量可以调用
+npm install sass-resources-loader --save-dev
+在vue.config.js中这样写：(如果没有手动在根目录创建)
+module.exports = {
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `
+          @import "@/assets/styles/common.scss";
+        `
+      }
+    }
+  }
+}
