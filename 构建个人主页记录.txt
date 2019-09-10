@@ -20,3 +20,56 @@ module.exports = {
     }
   }
 }
+
+组建引入：
+import {Component,Vue} from 'vue-property-decorator';
+import {componentA,componentB} from '@/components';
+
+ @Component({
+    components:{
+        componentA,
+        componentB,
+    },
+    directives: {
+        focus: {
+            // 指令的定义
+            inserted: function (el) {
+                el.focus()
+            }
+        }
+    }
+})
+export default class YourCompoent extends Vue{
+   
+}
+
+父组建传子组件：
+import {Component,Vue,Prop} from vue-property-decorator;
+
+@Component
+export default class YourComponent extends Vue {
+    @Prop(String)
+    propA:string;
+    
+    @Prop([String,Number])
+    propB:string|number;
+    
+    @Prop({
+     type: String, // type: [String , Number]
+     default: 'default value', // 一般为String或Number
+      //如果是对象或数组的话。默认值从一个工厂函数中返回
+      // defatult: () => {
+      //     return ['a','b']
+      // }
+     required: true,
+     validator: (value) => {
+        return [
+          'InProcess',
+          'Settled'
+        ].indexOf(value) !== -1
+     }
+    })
+    propC:string;
+    
+    
+}

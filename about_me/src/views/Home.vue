@@ -49,7 +49,7 @@ export default class Home extends Vue {
   private mounted() {
     let _this = this,
       count = 0;
-    _this.$refs.tips["childNodes"].forEach(el => {
+    _this.$refs.tips["childNodes"].forEach((el: Object) => {
       setTimeout(() => {
         _this.titleClass = true;
         _this.tipsClass += 1;
