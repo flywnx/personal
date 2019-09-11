@@ -45,7 +45,9 @@ export default class Home extends Vue {
   public tips: string = "咸鱼王的世界";
 
   public isShowNav: boolean = false;
-
+  $refs!: {
+    tips: HTMLFormElement
+  }
   private mounted() {
     let _this = this,
       count = 0;

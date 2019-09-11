@@ -1,16 +1,20 @@
 <template>
   <div
-    id='portraitList'
+    id="portraitList"
     ref="portraitList"
     @mousewheel="handleScroll"
     @mouseover="startScroll"
+    @mouseout="endScroll"
   >
-    <slot></slot>
+    <div class="conent" :style="{top:(sceollNum*100)+'vh'}">
+      <slot></slot>
+    </div>
   </div>
 </template>
 <script lang='ts'>
 // 竖屏首页 展示轮播组件
 import { Prop, Component, Vue } from "vue-property-decorator";
+import utils from "../utils";
 @Component
 export default class PortraitList extends Vue {
   @Prop({
@@ -18,21 +22,27 @@ export default class PortraitList extends Vue {
     default: "1"
   })
   listLength: string;
-
-  mounted() {
-    console.log(this.listLength);
+  scrollType: boolean = false;
+  sceollNum: number = 0;
+  debouncetype: boolean = false;
+  public startScroll() {
+    this.scrollType = true;
   }
-  destroyed() {}
 
-  methods: {};
-  public onScrolls(): void {
-    // let e = arguments[0];
-    console.log(arguments[0].target.scrollTop);
+  public endScroll() {
+    this.scrollType = false;
   }
   public handleScroll(): void {
-    console.log(arguments[0]);
+    if (!utils.debounce(this, "debouncetype")) {
+      //防抖
+      return;
+    }
+    if (arguments[0].wheelDelta > 0) {
+      if (this.sceollNum > -Number(this.listLength) + 1) this.sceollNum -= 1;
+    } else {
+      if (this.sceollNum < 0) this.sceollNum += 1;
+    }
   }
-  public startScroll(): void {}
 }
 </script>
 <style lang="scss" scoped>
@@ -40,5 +50,9 @@ export default class PortraitList extends Vue {
   width: 100%;
   height: 100vh;
   overflow: hidden;
+}
+.conent {
+  position: relative;
+  transition: top 0.3s;
 }
 </style>
