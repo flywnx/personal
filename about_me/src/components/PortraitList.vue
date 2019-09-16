@@ -5,7 +5,8 @@
        @mouseover="startScroll"
        @mouseout="endScroll">
     <div class="conent"
-         :style="{top:(sceollNum*100)+'vh'}">
+         :style="{top:(sceollNum*100)+'vh'}"
+         ref="conent">
       <slot></slot>
     </div>
   </div>
@@ -16,13 +17,15 @@ import { Prop, Component, Vue } from "vue-property-decorator";
 import utils from "../utils";
 @Component
 export default class PortraitList extends Vue {
-  @Prop({
-    type: String
-  })
-  public listLength: string = "1";
   public scrollType: boolean = false;
   public sceollNum: number = 0;
   public debouncetype: boolean = false;
+  @Prop({
+    type: String,
+    default: "1"
+  })
+  public listLength!: string;
+
   public startScroll() {
     this.scrollType = true;
   }
@@ -36,12 +39,12 @@ export default class PortraitList extends Vue {
       return;
     }
     if (arguments[0].wheelDelta > 0) {
-      if (this.sceollNum > -Number(this.listLength) + 1) {
-        this.sceollNum -= 1;
-      }
-    } else {
       if (this.sceollNum < 0) {
         this.sceollNum += 1;
+      }
+    } else {
+      if (this.sceollNum > -Number(this.listLength) + 1) {
+        this.sceollNum -= 1;
       }
     }
   }

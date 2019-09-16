@@ -7,7 +7,7 @@
       <div class='slot'>1234</div>
       <div class='slot'>1233</div>
       <div class='slot'>1232</div>
-      <div class='slot'>1231</div>
+      <Home></Home>
     </PortraitList>
   </div>
 </template>
@@ -15,9 +15,11 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import PortraitList from "@/components/PortraitList.vue";
+import Home from "@/views/Home.vue";
 @Component({
   components: {
-    PortraitList
+    PortraitList,
+    Home
   }
 })
 export default class App extends Vue {}
