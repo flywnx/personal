@@ -1,12 +1,11 @@
 <template>
-  <div
-    id="portraitList"
-    ref="portraitList"
-    @mousewheel="handleScroll"
-    @mouseover="startScroll"
-    @mouseout="endScroll"
-  >
-    <div class="conent" :style="{top:(sceollNum*100)+'vh'}">
+  <div id="portraitList"
+       ref="portraitList"
+       @mousewheel="handleScroll"
+       @mouseover="startScroll"
+       @mouseout="endScroll">
+    <div class="conent"
+         :style="{top:(sceollNum*100)+'vh'}">
       <slot></slot>
     </div>
   </div>
@@ -18,13 +17,12 @@ import utils from "../utils";
 @Component
 export default class PortraitList extends Vue {
   @Prop({
-    type: String,
-    default: "1"
+    type: String
   })
-  listLength: string;
-  scrollType: boolean = false;
-  sceollNum: number = 0;
-  debouncetype: boolean = false;
+  public listLength: string = "1";
+  public scrollType: boolean = false;
+  public sceollNum: number = 0;
+  public debouncetype: boolean = false;
   public startScroll() {
     this.scrollType = true;
   }
@@ -34,13 +32,17 @@ export default class PortraitList extends Vue {
   }
   public handleScroll(): void {
     if (!utils.debounce(this, "debouncetype")) {
-      //防抖
+      // 防抖
       return;
     }
     if (arguments[0].wheelDelta > 0) {
-      if (this.sceollNum > -Number(this.listLength) + 1) this.sceollNum -= 1;
+      if (this.sceollNum > -Number(this.listLength) + 1) {
+        this.sceollNum -= 1;
+      }
     } else {
-      if (this.sceollNum < 0) this.sceollNum += 1;
+      if (this.sceollNum < 0) {
+        this.sceollNum += 1;
+      }
     }
   }
 }

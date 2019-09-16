@@ -35,7 +35,7 @@ import { Component, Vue } from "vue-property-decorator";
 export default class Home extends Vue {
   public titleClass: boolean = false;
   public tipsClass: number = 0;
-  public navList: Array<string> = [
+  public navList: string[] = [
     "首页",
     "技术分享",
     "视听分享",
@@ -45,22 +45,22 @@ export default class Home extends Vue {
   public tips: string = "咸鱼王的世界";
 
   public isShowNav: boolean = false;
-  $refs!: {
-    tips: HTMLFormElement
-  }
+  public $refs!: {
+    tips: HTMLFormElement;
+  };
   private mounted() {
-    let _this = this,
-      count = 0;
-    _this.$refs.tips["childNodes"].forEach((el: Object) => {
+    const that = this;
+    let count = 0;
+    this.$refs.tips.childNodes.forEach((el, index) => {
       setTimeout(() => {
-        _this.titleClass = true;
-        _this.tipsClass += 1;
+        that.titleClass = true;
+        that.tipsClass += 1;
       }, count * 300);
       count += 1;
     });
   }
 
-  public onShowNav(): void {
+  private onShowNav(): void {
     this.isShowNav = !this.isShowNav;
   }
 }
